@@ -11,6 +11,7 @@
 <body>
     {% block content %}{% endblock %}
     <script src="{% static 'api.js' %}"></script>
+    {% block auth_check %}<script>requireAuth();</script>{% endblock %}
     {% block extra_js %}{% endblock %}
 </body>
 </html>
