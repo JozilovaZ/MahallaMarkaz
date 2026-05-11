@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -14,33 +15,43 @@ def main(request):
 def login_page(request):
     return render(request, 'login.html')
 
+@login_required(login_url='/login/')
 def murojaat(request):
     return render(request, 'murojaat.html')
 
+@login_required(login_url='/login/')
 def taklif(request):
     return render(request, 'taklif.html')
 
+@login_required(login_url='/login/')
 def mxizmatlari(request):
     return render(request, 'mxizmatlari.html')
 
+@login_required(login_url='/login/')
 def pasport(request):
     return render(request, 'pasport.html')
 
+@login_required(login_url='/login/')
 def admin_panel(request):
     return render(request, 'admin_panel.html')
 
+@login_required(login_url='/login/')
 def admin_users(request):
     return render(request, 'admin_users.html')
 
+@login_required(login_url='/login/')
 def admin_login(request):
     return render(request, 'admin_login.html')
 
+@login_required(login_url='/login/')
 def rahbar_profil(request, pk):
     return render(request, 'rahbar-profil.html')
 
+@login_required(login_url='/login/')
 def mas_ul_kabinet(request):
     return render(request, 'mas-ul-kabinet.html')
 
+@login_required(login_url='/login/')
 def admin_xabarlar(request):
     return render(request, 'admin_xabarlar.html')
 
