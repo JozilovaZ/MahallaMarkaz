@@ -9,7 +9,7 @@ from .serializers import MahallaInfoSerializer, MahallaRahbarSerializer, RahbarX
 
 
 def main(request):
-    return redirect('/login/')
+    return render(request, 'main.html')
 
 def login_page(request):
     return render(request, 'login.html')
