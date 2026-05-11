@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -9,7 +9,7 @@ from .serializers import MahallaInfoSerializer, MahallaRahbarSerializer, RahbarX
 
 
 def main(request):
-    return render(request, 'main.html')
+    return redirect('/login/')
 
 def login_page(request):
     return render(request, 'login.html')
