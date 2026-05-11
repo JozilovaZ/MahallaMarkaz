@@ -11,6 +11,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+RUN mkdir -p /app/data && chmod 777 /app/data
+
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000

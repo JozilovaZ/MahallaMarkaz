@@ -6,7 +6,7 @@ services:
     container_name: mahalla_web
     restart: always
     volumes:
-      - sqlite_data:/app/db.sqlite3
+      - sqlite_data:/app/data
       - static_files:/app/staticfiles
       - media_files:/app/media
     environment:
