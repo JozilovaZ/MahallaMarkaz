@@ -1,0 +1,43 @@
+Murojaatni localStorage ga saqlash
+            let murojaatlar = JSON.parse(localStorage.getItem('mahalla_murojaatlar')) || [];
+            
+            const yangiMurojaat = {
+                id: Date.now(),
+                sana: new Date().toLocaleString('uz-UZ'),
+                ism: ism,
+                tel: tel,
+                mavzu: mavzu,
+                turi: turiSelect.options[turiSelect.selectedIndex].text,
+                qabulQiluvchi: masul.ism,
+                qabulLavozim: masul.lavozim,
+                matn: matn,
+                holat: 'yuborilgan'  // Yangi murojaat "Yuborilgan" holatida
+            };
+            
+            murojaatlar.unshift(yangiMurojaat);
+            localStorage.setItem('mahalla_murojaatlar', JSON.stringify(murojaatlar));
+            
+            // Muvaffaqiyatli yuborilganligini ko'rsatish
+            const successDiv = document.getElementById('successMessage');
+            successDiv.innerHTML = `
+                <i class="fas fa-check-circle" style="font-size: 1.5rem; margin-right: 10px;"></i>
+                <strong>✅ Murojaatingiz yuborildi!</strong><br>
+                📌 Kimga bordi: <strong>${masul.ism}</strong><br>
+                📋 Lavozimi: ${masul.lavozim}<br>
+                📞 Bog‘lanish: ${masul.tel}<br><br>
+                <small>Tez orada siz bilan bog‘lanamiz. Murojaat holatini "Murojaatlarim" bo'limidan kuzatishingiz mumkin.</small>
+            `;
+            successDiv.classList.add('show');
+            
+            // Formani tozalash
+            this.reset();
+            qabulCard.classList.remove('active');
+            
+            // 5 sekunddan keyin xabar yashirinadi
+            setTimeout(() => {
+                successDiv.classList.remove('show');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

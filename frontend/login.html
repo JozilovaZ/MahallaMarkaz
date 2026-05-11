@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart mahalla axborot tizimi - Kirish</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f5e3f 0%, #1a8a5c 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-container {
+            background: white;
+            border-radius: 30px;
+            padding: 45px 35px;
+            width: 450px;
+            max-width: 90%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .logo { font-size: 60px; margin-bottom: 10px; }
+        h1 { color: #0f5e3f; font-size: 28px; margin-bottom: 30px; border-bottom: 3px solid #1a8a5c; display: inline-block; padding-bottom: 8px; }
+        .input-group { margin-bottom: 25px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 8px; color: #333; font-weight: 500; font-size: 14px; }
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            font-size: 15px;
+            outline: none;
+        }
+        .input-group input:focus { border-color: #1a8a5c; }
+        button {
+            width: 100%;
+            background: #0f5e3f;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover { background: #1a8a5c; transform: translateY(-2px); }
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 14px;
+            margin-top: 20px;
+            font-size: 14px;
+            border-left: 4px solid #dc2626;
+            text-align: left;
+        }
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 12px;
+            border-radius: 14px;
+            margin-top: 20px;
+            font-size: 14px;
+            border-left: 4px solid #10b981;
+            text-align: left;
+        }
+        .demo-info {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 12px;
+            color: #888;
+            text-align: left;
+        }
+        .demo-info p { margin: 5px 0; }
+        .demo-info strong { color: #0f5e3f; }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <div class="logo">🏘️</div>
+    <h1>Mahalla tizimi</h1>
+    
+    <div class="input-group">
+        <label>📧 Email yoki Login</label>
+        <input type="text" id="loginInput" placeholder="Loginingizni kiriting" autocomplete="off">
+    </div>
+    
+    <div class="input-group">
+        <label>🔒 Parol</label>
+        <input type="password" id="passwordInput" placeholder="Parolingizni kiriting">
+    </div>
+    
+    <button id="loginBtn">Kirish</button>
+    
+    <div id="messageBox"></div>
+
+    
+   
+</div>
+
+<script src="api.js"></script>
+<script>
+    const messageBox = document.getElementById('messageBox');
+
+    async function doLogin() {
+        const email = document.getElementById('loginInput').value.trim();
+        const password = document.getElementById('passwordInput').value.trim();
+
+        if (!email || !password) {
+            messageBox.innerHTML = `<div class="error-message">❌ Iltimos, email va parolni to'ldiring!</div>`;
+            return;
+        }
+
+        const btn = document.getElementById('loginBtn');
+        btn.textContent = 'Kirilmoqda...';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('http://127.0.0.1:8000/api/auth/login/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                setAuth(data);
+                messageBox.innerHTML = `<div class="success-message">✅ Xush kelibsiz, ${data.user.fullname}!<br>🏘️ Mahalla tizimiga muvaffaqiyatli kirdingiz.</div>`;
+                let redirect = 'murojaat.html';
+                if (data.user.role === 'admin') redirect = 'admin-panel.html';
+                else if (data.user.role === 'responsible') redirect = '/kabinet/';
+                setTimeout(() => { window.location.href = redirect; }, 1000);
+            } else {
+                messageBox.innerHTML = `<div class="error-message">❌ ${data.detail || "Email yoki parol xato!"}</div>`;
+            }
+        } catch (e) {
+            messageBox.innerHTML = `<div class="error-message">❌ Server bilan ulanishda xatolik. Server ishlaayotganligini tekshiring.</div>`;
+        } finally {
+            btn.textContent = 'Kirish';
+            btn.disabled = false;
+        }
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', doLogin);
+    document.getElementById('passwordInput').addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
+    document.getElementById('loginInput').addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
+</script>
+</body>
+</html>

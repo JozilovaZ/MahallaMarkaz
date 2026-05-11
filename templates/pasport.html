@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart mahalla axborot tizimi - Mahalla pasporti</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Mahalla pasporti uchun maxsus stillar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .section-title {
+            background: #2a5298;
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            font-size: 20px;
+        }
+        
+        .section-content {
+            padding: 20px;
+        }
+        
+        .address-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .address-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #2a5298;
+        }
+        
+        .address-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .address-value {
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .address-value.unknown {
+            color: #888;
+            font-style: italic;
+        }
+        
+        .divider {
+            height: 1px;
+            background: #eee;
+            margin: 25px 0;
+        }
+        
+        .person-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .person-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s;
+            border-left: 4px solid #2a5298;
+        }
+        
+        .person-card:hover {
+            background: #edf2ff;
+            transform: translateX(5px);
+        }
+        
+        .person-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .person-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .person-info {
+            flex: 1;
+        }
+        
+        .person-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+        
+        .person-position {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .person-fullname {
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .contact-btn {
+            background: #2a5298;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .contact-btn:hover {
+            background: #1e3c72;
+            transform: translateY(-2px);
+        }
+
+        .person-card { cursor: pointer; }
+
+        .loading-overlay {
+            text-align: center; padding: 30px; color: #888;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .address-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .person-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sarlavha qismi -->
+        <header class="header">
+            <button class="back-btn" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1><i class="fas fa-passport"></i> Mening mahallam</h1>
+            <p>Mahalla pasporti ma'lumotlari</p>
+        </header>
+        
+        <!-- Asosiy kontent -->
+        <main class="content">
+            <!-- Manzil ma'lumotlari -->
+            <section class="section">
+                <div class="section-title">
+                    <i class="fas fa-map-marker-alt"></i> Manzil ma'lumotlari
+                </div>
+                <div class="section-content">
+                    <div class="address-info">
+                        <div class="address-item">
+                            <div class="address-label">Tuman</div>
+                            <div class="address-value unknown">Aniqlanmadi</div>
+                        </div>
+                        <div class="address-item">
+                            <div class="address-label">Mahalla</div>
+                            <div class="address-value unknown">Aniqlanmadi</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="divider"></div>
+            
+            <!-- Mahalla pasporti -->
+            <section class="section">
+                <div class="section-title">
+                    <i class="fas fa-id-card"></i> Mahalla pasporti
+                </div>
+                <div class="section-content">
+                    <div class="person-list" id="rahbarlar-list">
+                        <div class="loading-overlay">
+                            <i class="fas fa-spinner fa-spin fa-2x"></i><br>Yuklanmoqda...
+                        </div>
+                    </div>
+                </div>
+                <a href="mxizmatlari.html" class="next-button" id="loginButton">
+                <span>E'lonlar va ish o'rinlari</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p><i class="fas fa-info-circle"></i> Ma'lumotlar mahalla ma'muriyati tomonidan taqdim etilgan</p>
+            <p style="margin-top: 10px; font-size: 12px;">© 2026 Smart mahalla axborot tizimi</p>
+        </footer>
+    </div>
+    
+    <script>
+        const LAVOZIM_ICONS = {
+            rais: 'fa-user-tie',
+            hokim_yordamchisi: 'fa-user-shield',
+            yoshlar: 'fa-users',
+            xotin_qizlar: 'fa-female',
+            profilaktika: 'fa-user-shield',
+            boshqa: 'fa-user',
+        };
+
+        async function loadMahallaInfo() {
+            try {
+                const res = await fetch('/api/mahalla-info/');
+                const data = await res.json();
+                if (data.tuman) document.querySelectorAll('.address-value')[0].textContent = data.tuman;
+                if (data.mahalla) document.querySelectorAll('.address-value')[1].textContent = data.mahalla;
+                document.querySelectorAll('.address-value').forEach(el => {
+                    if (el.textContent !== 'Aniqlanmadi') el.classList.remove('unknown');
+                });
+            } catch (e) {}
+        }
+
+        async function loadRahbarlar() {
+            const list = document.getElementById('rahbarlar-list');
+            try {
+                const res = await fetch('/api/rahbarlar/');
+                const rahbarlar = await res.json();
+                if (!rahbarlar.length) {
+                    list.innerHTML = '<p style="color:#888;padding:10px">Rahbarlar ma\'lumoti topilmadi</p>';
+                    return;
+                }
+                list.innerHTML = rahbarlar.map(r => {
+                    const icon = LAVOZIM_ICONS[r.lavozim] || 'fa-user';
+                    return `
+                    <div class="person-card" onclick="window.location.href='/rahbar/${r.id}/'">
+                        <div class="person-avatar">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div class="person-info">
+                            <div class="person-name">${r.lavozim_display || r.lavozim}</div>
+                            <div class="person-fullname">${r.ismi}</div>
+                            <div class="person-position">${r.lavozim_tavsifi || ''}</div>
+                        </div>
+                        <a href="/rahbar/${r.id}/" class="contact-btn" onclick="event.stopPropagation()">
+                            <i class="fas fa-envelope"></i> Xabar
+                        </a>
+                    </div>`;
+                }).join('');
+            } catch (e) {
+                list.innerHTML = '<p style="color:#e74c3c;padding:10px">Ma\'lumotlarni yuklashda xatolik</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMahallaInfo();
+            loadRahbarlar();
+        });
+    </script>
+    <script src="/static/sidebar.js"></script>
+</body>
+</html>

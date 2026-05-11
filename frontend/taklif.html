@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taklif bildirish</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        /* Header qismi */
+        .header {
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .page-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        
+        /* Kontent qismi */
+        .content {
+            padding: 30px;
+        }
+        
+        /* Forma stillari */
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 200px;
+            transition: all 0.3s;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+        }
+        
+        textarea::placeholder {
+            color: #999;
+            font-size: 15px;
+        }
+        
+        .submit-btn {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background: #2a5298;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(42, 82, 152, 0.3);
+        }
+        
+        /* Qo'shimcha ma'lumot */
+        .info-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 4px solid #1e3c72;}
+        
+        .info-title {
+            font-size: 18px;
+            color: #1e3c72;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .info-list li {
+            padding: 8px 0;
+            color: #555;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .info-list i {
+            color: #1e3c72;
+            margin-top: 3px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            background: #f8f9fa;
+        }
+        
+        .footer a {
+            color: #1e3c72;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Mobil uchun moslashuvchanlik */
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 15px;
+                margin: 10px;
+            }
+            
+            .header {
+                padding: 25px 20px;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .page-subtitle {
+                font-size: 16px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            textarea {
+                min-height: 180px;
+            }
+            
+            .submit-btn {
+                padding: 14px 25px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .page-title {
+                font-size: 24px;
+            }
+            
+            .info-box {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header qismi -->
+        <header class="header">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1 class="page-title">Taklif bildirish</h1>
+            <p class="page-subtitle">Ilova haqida fikr va mulohazalaringiz bo'lsa biz bilan bo'lishing</p>
+        </header>
+        
+        <!-- Asosiy kontent -->
+        <main class="content">
+            <form class="feedback-form" id="suggestionForm">
+                <div class="form-group">
+                    <label class="form-label">Iltimos, taklifingizni kiriting</label>
+                    <textarea 
+                        placeholder="Bu yerda ilova, xizmatlar yoki boshqa masalalarda taklif va mulohazalaringizni yozing..."
+                        required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Yuborish
+                </button>
+            </form>
+            
+            <!-- Qo'shimcha ma'lumot -->
+            <div class="info-box">
+                <h3 class="info-title">
+                    <i class="fas fa-info-circle"></i> Qayd etish kerak
+                </h3>
+                <ul class="info-list">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Takliflar 24 soat ichida ko'rib chiqiladi</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Barcha takliflar maxfiylik asosida qayta ishlanadi</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Javob elektron pochta orqali yuboriladi</span>
+                    </li>
+                    <li><i class="fas fa-check-circle"></i>
+                        <span>Taklif bildirish bepul xizmatdir</span>
+                    </li>
+                </ul>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p><i class="fas fa-envelope"></i> Takliflar uchun: <a href="mailto:taklif@mahalla.uz">taklif@mahalla.uz</a></p>
+            <p style="margin-top: 10px;">
+                <a href="index.html">
+                    <i class="fas fa-home"></i> Asosiy sahifaga qaytish
+                </a>
+            </p>
+            <p style="margin-top: 10px; font-size: 12px; color: #888;">
+                 2026 Smart mahalla axborot tizimi
+            </p>
+        </footer>
+    </div>
+    
+    <script src="api.js"></script>
+    <script>
+        requireAuth();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('suggestionForm');
+            const textarea = form.querySelector('textarea');
+
+            // Formaga sarlavha va kategoriya qo'shamiz
+            const content = document.querySelector('.content');
+            const extraHTML = `
+                <div class="form-group" style="margin-bottom:15px">
+                    <label class="form-label">Sarlavha</label>
+                    <input type="text" id="taklifSarlavha" class="form-control" placeholder="Taklifingiz sarlavhasi" required
+                        style="width:100%;padding:12px 15px;border:2px solid #e0e0e0;border-radius:10px;font-size:16px;outline:none;">
+                </div>
+                <div class="form-group" style="margin-bottom:15px">
+                    <label class="form-label">Kategoriya</label>
+                    <select id="taklifKategoriya" style="width:100%;padding:12px 15px;border:2px solid #e0e0e0;border-radius:10px;font-size:16px;outline:none;">
+                        <option value="infratuzilma">Infratuzilma</option>
+                        <option value="xavfsizlik">Xavfsizlik</option>
+                        <option value="ekologiya">Ekologiya</option>
+                        <option value="ijtimoiy">Ijtimoiy</option>
+                        <option value="madaniy">Madaniy</option>
+                        <option value="boshqa">Boshqa</option>
+                    </select>
+                </div>
+            `;
+            form.insertAdjacentHTML('afterbegin', extraHTML);
+
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const sarlavha = document.getElementById('taklifSarlavha').value.trim();
+                const kategoriya = document.getElementById('taklifKategoriya').value;
+                const mazmun = textarea.value.trim();
+
+                if (!sarlavha || mazmun.length < 10) {
+                    alert('Iltimos, sarlavha va kamida 10 ta belgidan iborat taklif yozing!');
+                    return;
+                }
+
+                const btn = form.querySelector('.submit-btn');
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Yuborilmoqda...';
+                btn.disabled = true;
+
+                try {
+                    const res = await apiFetch('/takliflar/', {
+                        method: 'POST',
+                        body: JSON.stringify({ sarlavha, kategoriya, mazmun, ustuvorlik: 'orta' }),
+                    });
+                    if (res && res.ok) {
+                        alert('✅ Taklifingiz muvaffaqiyatli yuborildi!\n\nRahmat. 24 soat ichida ko\'rib chiqiladi.');
+                        form.reset();
+                    } else {
+                        const err = await res.json();
+                        alert('Xatolik: ' + JSON.stringify(err));
+                    }
+                } catch (err) {
+                    alert('Server bilan ulanishda xatolik');
+                } finally {
+                    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Yuborish';
+                    btn.disabled = false;
+                }
+            });
+
+            document.querySelector('.back-btn').addEventListener('click', e => { e.preventDefault(); window.history.back(); });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mening murojatlarim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f0f4f8; color: #222; }
+
+        .page-wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+
+        .page-header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff; border-radius: 16px; padding: 28px 32px;
+            margin-bottom: 28px; display: flex; align-items: center; gap: 18px;
+        }
+        .page-header i { font-size: 32px; opacity: .85; }
+        .page-header h1 { font-size: 22px; font-weight: 800; }
+        .page-header p { font-size: 14px; opacity: .72; margin-top: 4px; }
+
+        .stats-row { display: flex; gap: 14px; margin-bottom: 24px; flex-wrap: wrap; }
+        .stat-box {
+            flex: 1; min-width: 120px; background: #fff; border-radius: 12px;
+            padding: 18px 16px; text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,.06); border-top: 3px solid #ddd;
+        }
+        .stat-box.kutilmoqda { border-top-color: #e67e22; }
+        .stat-box.tasdiqlangan { border-top-color: #27ae60; }
+        .stat-box.bekor { border-top-color: #e74c3c; }
+        .stat-box.jami { border-top-color: #2a5298; }
+        .stat-num { font-size: 28px; font-weight: 900; }
+        .stat-box.kutilmoqda .stat-num { color: #e67e22; }
+        .stat-box.tasdiqlangan .stat-num { color: #27ae60; }
+        .stat-box.bekor .stat-num { color: #e74c3c; }
+        .stat-box.jami .stat-num { color: #2a5298; }
+        .stat-lbl { font-size: 12px; color: #888; margin-top: 4px; }
+
+        .new-btn-wrap { margin-bottom: 24px; }
+        .new-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: #2a5298; color: #fff; padding: 12px 26px;
+            border-radius: 10px; font-size: 15px; font-weight: 600;
+            text-decoration: none; transition: background .2s;
+        }
+        .new-btn:hover { background: #1e3c72; }
+
+        .xabar-list { display: flex; flex-direction: column; gap: 14px; }
+
+        .xabar-card {
+            background: #fff; border-radius: 14px; padding: 20px 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.07); border-left: 4px solid #ddd;
+            animation: fadeUp .3s ease;
+        }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+        .xabar-card.kutilmoqda { border-left-color: #e67e22; }
+        .xabar-card.tasdiqlangan { border-left-color: #27ae60; }
+        .xabar-card.bekor_qilingan { border-left-color: #e74c3c; }
+
+        .xcard-top {
+            display: flex; align-items: flex-start; justify-content: space-between;
+            gap: 12px; margin-bottom: 10px; flex-wrap: wrap;
+        }
+        .xcard-rahbar { font-size: 14px; font-weight: 700; color: #1e3c72; }
+        .xcard-lavozim { font-size: 12px; color: #888; margin-top: 2px; }
+
+        .holat-badge {
+            padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap;
+        }
+        .holat-badge.kutilmoqda { background: #fff3e0; color: #e67e22; }
+        .holat-badge.tasdiqlangan { background: #e8f5e9; color: #27ae60; }
+        .holat-badge.bekor_qilingan { background: #fce4e4; color: #e74c3c; }
+
+        .xcard-matn { font-size: 14px; color: #444; line-height: 1.65; margin-bottom: 8px; }
+        .xcard-javob {
+            background: #f0f4ff; border-radius: 8px; padding: 10px 14px;
+            font-size: 13px; color: #2a5298; font-style: italic; margin-bottom: 8px;
+        }
+        .xcard-meta { font-size: 12px; color: #bbb; }
+
+        .empty-state {
+            text-align: center; padding: 80px 20px; color: #bbb;
+        }
+        .empty-state i { font-size: 56px; margin-bottom: 16px; display: block; }
+        .empty-state p { font-size: 16px; margin-bottom: 20px; }
+
+        .loading { text-align: center; padding: 60px; color: #aaa; }
+
+        .refresh-btn {
+            background: none; border: 1.5px solid #2a5298; color: #2a5298;
+            padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 600;
+            cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+            transition: all .2s; margin-bottom: 20px;
+        }
+        .refresh-btn:hover { background: #2a5298; color: #fff; }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+    <div class="page-header">
+        <i class="fas fa-inbox"></i>
+        <div>
+            <h1>Mening murojatlarim</h1>
+            <p>Mahalla mas'ullariga yuborgan barcha xabarlaringiz</p>
+        </div>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-box jami"><div class="stat-num" id="st-jami">—</div><div class="stat-lbl">Jami</div></div>
+        <div class="stat-box kutilmoqda"><div class="stat-num" id="st-kutilmoqda">—</div><div class="stat-lbl">Kutilmoqda</div></div>
+        <div class="stat-box tasdiqlangan"><div class="stat-num" id="st-tasdiqlangan">—</div><div class="stat-lbl">Tasdiqlangan</div></div>
+        <div class="stat-box bekor"><div class="stat-num" id="st-bekor">—</div><div class="stat-lbl">Bekor qilingan</div></div>
+    </div>
+
+    <div class="new-btn-wrap" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <a href="/pasport/" class="new-btn"><i class="fas fa-plus"></i> Yangi murojaat yuborish</a>
+        <button class="refresh-btn" onclick="loadAll()"><i class="fas fa-sync-alt"></i> Yangilash</button>
+    </div>
+
+    <div id="loading" class="loading"><i class="fas fa-spinner fa-spin fa-2x"></i><br><br>Yuklanmoqda...</div>
+    <div class="xabar-list" id="xabar-list"></div>
+</div>
+
+<script>
+const holatDisplay = { kutilmoqda: 'Kutilmoqda', tasdiqlangan: 'Tasdiqlangan', bekor_qilingan: 'Bekor qilingan' };
+const holatIcons   = { kutilmoqda: '⏳', tasdiqlangan: '✅', bekor_qilingan: '❌' };
+
+// localStorage dan barcha saqlangan xabarlarni rahbar ID bo'yicha olish
+function getSaqlanganlar() {
+    const result = {};
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        const m = key && key.match(/^xabarlar_rahbar_(\d+)$/);
+        if (m) {
+            const ids = JSON.parse(localStorage.getItem(key) || '[]');
+            if (ids.length) result[m[1]] = ids;
+        }
+    }
+    return result;
+}
+
+async function loadAll() {
+    const loading = document.getElementById('loading');
+    const list    = document.getElementById('xabar-list');
+    loading.style.display = 'block';
+    list.innerHTML = '';
+
+    const saqlanganlar = getSaqlanganlar();
+    const rahbarIds = Object.keys(saqlanganlar);
+
+    if (!rahbarIds.length) {
+        loading.style.display = 'none';
+        renderEmpty();
+        updateStats([]);
+        return;
+    }
+
+    let barcha = [];
+
+    try {
+        const natijalar = await Promise.all(
+            rahbarIds.map(rid =>
+                fetch(`/api/rahbarlar/${rid}/xabar/`).then(r => r.ok ? r.json() : []).catch(() => [])
+            )
+        );
+
+        rahbarIds.forEach((rid, i) => {
+            const ids = saqlanganlar[rid];
+            const mening = (natijalar[i] || []).filter(x => ids.includes(x.id));
+            barcha = barcha.concat(mening);
+        });
+
+        // Eng yangi yuqorida
+        barcha.sort((a, b) => new Date(b.yuborilgan_vaqt) - new Date(a.yuborilgan_vaqt));
+    } catch (e) {
+        loading.style.display = 'none';
+        list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-circle" style="color:#e74c3c"></i><p>Xatolik yuz berdi. Qayta urinib ko\'ring.</p></div>';
+        return;
+    }
+
+    loading.style.display = 'none';
+    updateStats(barcha);
+
+    if (!barcha.length) { renderEmpty(); return; }
+
+    list.innerHTML = barcha.map(x => `
+        <div class="xabar-card ${x.holat}">
+            <div class="xcard-top">
+                <div>
+                    <div class="xcard-rahbar"><i class="fas fa-id-badge"></i> ${x.rahbar_ismi || '—'}</div>
+                    <div class="xcard-lavozim">${x.rahbar_lavozim || ''}</div>
+                </div>
+                <span class="holat-badge ${x.holat}">${holatIcons[x.holat] || ''} ${holatDisplay[x.holat] || x.holat}</span>
+            </div>
+            <div class="xcard-matn">${x.matn}</div>
+            ${x.javob ? `<div class="xcard-javob"><i class="fas fa-reply"></i> Javob: ${x.javob}</div>` : ''}
+            <div class="xcard-meta"><i class="fas fa-clock"></i> ${new Date(x.yuborilgan_vaqt).toLocaleString('uz-UZ')}</div>
+        </div>`).join('');
+}
+
+function updateStats(arr) {
+    document.getElementById('st-jami').textContent        = arr.length;
+    document.getElementById('st-kutilmoqda').textContent  = arr.filter(x => x.holat === 'kutilmoqda').length;
+    document.getElementById('st-tasdiqlangan').textContent= arr.filter(x => x.holat === 'tasdiqlangan').length;
+    document.getElementById('st-bekor').textContent       = arr.filter(x => x.holat === 'bekor_qilingan').length;
+}
+
+function renderEmpty() {
+    document.getElementById('xabar-list').innerHTML = `
+        <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <p>Siz hali hech qanday murojaat yubormagansiz</p>
+            <a href="/pasport/" class="new-btn"><i class="fas fa-paper-plane"></i> Birinchi murojaatni yuborish</a>
+        </div>`;
+}
+
+loadAll();
+</script>
+<script src="/static/sidebar.js"></script>
+</body>
+</html>

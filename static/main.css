@@ -1,0 +1,172 @@
+/* Asosiy sozlamalar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f7f6;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navigatsiya qismi */
+.top-nav {
+    background-color: #ffffff;
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.gerb {
+    width: 50px;
+    height: auto;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-text strong {
+    font-size: 1.2rem;
+    color: #0056b3;
+    letter-spacing: 1px;
+}
+
+.logo-text span {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    margin-left: 20px;
+    transition: 0.3s;
+}
+
+.menu .oneid-link {
+    background-color: #0056b3;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 5px;
+}
+
+.menu .oneid-link:hover {
+    background-color: #003d80;
+}
+
+/* Hero Section (Asosiy qism) */
+.hero-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #0056b3 0%, #00a8cc 100%);
+    color: white;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.btn-send {
+    display: inline-block;
+    background-color: #ffcc00;
+    color: #333;
+    padding: 15px 35px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-send:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    background-color: #ffdb4d;
+}
+
+/* Ikonka qismi */
+.hero-icon {
+    flex: 1;
+    text-align: center;
+}
+
+.hero-icon i {
+    font-size: 15rem;
+    opacity: 0.2;
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Animatsiya */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Mobil moslashuvchanlik */
+@media (max-width: 768px) {
+    .hero-wrapper {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-icon {
+        display: none; /* Mobil versiyada katta ikonkani yashirish */
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+}

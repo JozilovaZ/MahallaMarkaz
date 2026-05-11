@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install *)",
+      "Bash(django-admin startproject *)",
+      "Bash(python manage.py startapp accounts)",
+      "Bash(python manage.py startapp murojaatlar)",
+      "Bash(python manage.py startapp takliflar)",
+      "Bash(python manage.py startapp elonlar)",
+      "Bash(python manage.py makemigrations)",
+      "PowerShell(Start-Sleep -Seconds 3; python -c \"import urllib.request; print\\(urllib.request.urlopen\\('http://127.0.0.1:8000/api/mahalla-info/'\\).read\\(\\).decode\\(\\)\\)\" 2>&1)",
+      "PowerShell(Start-Sleep -Seconds 3; Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/rahbarlar/\" -UseBasicParsing | Select-Object -ExpandProperty Content)",
+      "PowerShell(Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/rahbarlar/\" -UseBasicParsing | Select-Object -ExpandProperty Content | ConvertFrom-Json | ForEach-Object { \"$\\($_.id\\) $\\($_.ismi\\)\" })",
+      "PowerShell($body = '{\"yuboruvchi_ism\":\"Test\",\"yuboruvchi_telefon\":\"+998901234567\",\"matn\":\"Test xabar\"}'; try { $r = Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/rahbarlar/8/xabar/\" -Method POST -Body $body -ContentType \"application/json\" -UseBasicParsing; Write-Host \"Status:\" $r.StatusCode; Write-Host \"Body:\" $r.Content } catch { Write-Host \"Xato:\" $_.Exception.Message; $_.Exception.Response })",
+      "PowerShell(Copy-Item *)",
+      "PowerShell($body = '{\"yuboruvchi_ism\":\"Ali Valiyev\",\"yuboruvchi_telefon\":\"+998901234567\",\"matn\":\"Yo`l yoritish muammosi bor\"}'; $r = Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/rahbarlar/8/xabar/\" -Method POST -Body $body -ContentType \"application/json\" -UseBasicParsing; Write-Host $r.StatusCode $r.Content)",
+      "PowerShell($token = \\(Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/auth/login/\" -Method POST -Body '{\"email\":\"rais@oltogil.uz\",\"password\":\"rais2026\"}' -ContentType \"application/json\" -UseBasicParsing | ConvertFrom-Json\\).access; $r = Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/mening-xabarlarim/\" -Headers @{Authorization=\"Bearer $token\"} -UseBasicParsing; Write-Host $r.Content)"
+    ]
+  }
+}

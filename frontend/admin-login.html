@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart mahalla axborot tizimi | Admin Kirish</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh; display: flex; justify-content: center; align-items: center;
+        }
+        .admin-login-container { width: 100%; max-width: 450px; padding: 20px; }
+        .admin-login-box {
+            background: white; border-radius: 20px; padding: 40px; box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            border-top: 5px solid #2a5298; animation: slideUp 0.5s;
+        }
+        .admin-login-header { text-align: center; margin-bottom: 30px; }
+        .admin-logo { font-size: 2.5rem; color: #2a5298; margin-bottom: 15px; display: flex; justify-content: center; gap: 15px; }
+        .admin-logo i { color: #ff416c; }
+        h1 { font-size: 2rem; color: #2a5298; margin-bottom: 10px; }
+        .warning {
+            background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; padding: 10px 15px;
+            border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 10px;
+        }
+        .warning i { color: #f39c12; }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #555; font-weight: 500; }
+        .form-group input {
+            width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 10px;
+            font-size: 1rem; transition: border-color 0.3s;
+        }
+        .form-group input:focus { border-color: #2a5298; outline: none; }
+        .admin-login-button {
+            width: 100%; padding: 16px; background: linear-gradient(to right, #FF416C, #FF4B2B);
+            color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .admin-login-button:hover { background: linear-gradient(to right, #FF4B2B, #FF5733); transform: translateY(-2px); }
+        .back-button {
+            display: block; width: 100%; padding: 14px; background: #f0f0f0; color: #555;
+            border: none; border-radius: 10px; text-decoration: none; text-align: center;
+            margin-top: 15px; transition: background 0.3s;
+        }
+        .back-button:hover { background: #e0e0e0; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="admin-login-container">
+        <div class="admin-login-box">
+            <div class="admin-login-header">
+                <div class="admin-logo"><i class="fas fa-user-shield"></i><span>Smart Mahalla Admin</span></div>
+                <h1>Admin Paneli</h1>
+                <div class="warning"><i class="fas fa-exclamation-triangle"></i> Faqat ma'sul shaxslar uchun</div>
+            </div>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminUsername">Admin login</label>
+                    <input type="text" id="adminUsername" placeholder="Admin nomi" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Admin paroli</label>
+                    <input type="password" id="adminPassword" placeholder="Maxfiy parol" required>
+                </div>
+                <button type="submit" class="admin-login-button">Admin paneliga kirish</button>
+            </form>
+            <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Asosiy sahifaga qaytish</a>
+        </div>
+    </div>
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            // Admin ma'lumotlari
+            if (username === 'admin' && password === 'sevara') {
+                window.location.href = 'admin-panel.html';
+            } else {
+                alert('Noto\'g\'ri login yoki parol! Iltimos, qaytadan urinib ko\'ring.');
+            }
+        });
+    </script>
+</body>
+</html>
